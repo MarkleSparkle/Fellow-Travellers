@@ -48,3 +48,6 @@ public class Move : MonoBehaviour
 
     }
 }
+
+//DETECTING PROXIMITY STUFF!
+//https://forum.unity.com/threads/clean-est-way-to-find-nearest-object-of-many-c.44315/
