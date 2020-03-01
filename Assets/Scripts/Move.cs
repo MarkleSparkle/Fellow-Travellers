@@ -15,7 +15,8 @@ public class Move : MonoBehaviour
     {
         speed = 1.5f;
 
-        float direction = transform.rotation.z;
+        float direction = transform.eulerAngles.z;
+        Debug.Log("Found rotation: " + direction);
         switch (direction) {
             case 0:
                 directionVector = Vector2.left;
@@ -33,13 +34,18 @@ public class Move : MonoBehaviour
                 directionVector = Vector2.up;
                 break;
 
+            default:
+                Debug.Log("No selection found for "+direction+" degrees.");
+                break;
         }
+
+        Debug.Log("Direction Assigned: " + directionVector);
     }
 
     // Update is called once per frame
     void Update()
     {
         transform.position = (Vector2)transform.position + directionVector * speed * Time.deltaTime;
-
+        //Debug.Log("Current Direction: "+directionVector);
     }
 }

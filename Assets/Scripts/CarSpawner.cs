@@ -42,7 +42,7 @@ public class CarSpawner : MonoBehaviour
 
             //choose position
             float randomDirection = Mathf.Round(Random.value * 3);
-            Debug.Log("" + randomDirection);
+            Debug.Log("Generated Direction: " + randomDirection);
 
             Vector2 direction;
             Vector2 startingPoint = new Vector2();
@@ -50,9 +50,7 @@ public class CarSpawner : MonoBehaviour
             switch (randomDirection)//starting from the...
             {
 
-                case 0:
-                    //...left
-                    Debug.Log("LEFT" + randomDirection);
+                case 0://...left
 
                     //starting point
                     startingPoint.x = horizontalMin;
@@ -65,7 +63,6 @@ public class CarSpawner : MonoBehaviour
                     break;
                 case 1:
                     //...top
-                    Debug.Log("TOP" + randomDirection);
 
                     //starting point
                     startingPoint.y = verticalMax;
@@ -76,18 +73,14 @@ public class CarSpawner : MonoBehaviour
                     newCar.transform.Rotate(0, 0, 90);
 
                     break;
-                case 2:
-                    //...right
-                    Debug.Log("RIGHT" + randomDirection);
+                case 2://...right
 
                     startingPoint.x = horizontalMax;
                     changePoint = horizontalMax;
                     direction = Vector2.right;
 
                     break;
-                case 3:
-                    //...bottom
-                    Debug.Log("BOTTOM" + randomDirection);
+                case 3://...bottom
 
                     startingPoint.y = verticalMin;
                     changePoint = verticalMin;
@@ -97,9 +90,8 @@ public class CarSpawner : MonoBehaviour
                     newCar.transform.Rotate(0, 0, 270);
 
                     break;
-                default:
-                    //just in case there are decimals
-                    Debug.Log("DEFAULT: " + randomDirection);
+                default://just in case there are decimals
+                    Debug.Log("ERROR: " + randomDirection);
 
                     //starting point is (0,0)
                     changePoint = 0;
