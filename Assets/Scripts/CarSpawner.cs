@@ -59,6 +59,9 @@ public class CarSpawner : MonoBehaviour
                     changePoint = horizontalMin;
                     direction = Vector2.right;
 
+                    //rotation
+                    newCar.transform.Rotate(0,0,180);
+
                     break;
                 case 1:
                     //...top
@@ -68,6 +71,9 @@ public class CarSpawner : MonoBehaviour
                     startingPoint.y = verticalMax;
                     changePoint = verticalMax;
                     direction = Vector2.up;
+
+                    //rotation
+                    newCar.transform.Rotate(0, 0, 90);
 
                     break;
                 case 2:
@@ -87,6 +93,9 @@ public class CarSpawner : MonoBehaviour
                     changePoint = verticalMin;
                     direction = Vector2.up;
 
+                    //rotation
+                    newCar.transform.Rotate(0, 0, 270);
+
                     break;
                 default:
                     //just in case there are decimals
@@ -95,6 +104,8 @@ public class CarSpawner : MonoBehaviour
                     //starting point is (0,0)
                     changePoint = 0;
                     direction = Vector2.up;
+
+                    newCar.transform.Rotate(0,0,270);
 
                     break;
             }
