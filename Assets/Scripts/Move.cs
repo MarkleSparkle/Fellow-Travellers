@@ -14,10 +14,9 @@ public class Move : MonoBehaviour
     void Start()
     {
         speed = 1.5f;
-        float direction = transform.rotation.z;
 
-        switch (direction)
-        {
+        float direction = transform.rotation.z;
+        switch (direction) {
             case 0:
                 directionVector = Vector2.left;
                 break;
