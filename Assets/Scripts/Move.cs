@@ -9,7 +9,6 @@ public class Move : MonoBehaviour
     public Vector2 originalDirection;
     private Vector2 directionVector;
 
-
     // Start is called before the first frame update
     void Start()
     {
@@ -46,6 +45,6 @@ public class Move : MonoBehaviour
     void Update()
     {
         transform.position = (Vector2)transform.position + directionVector * speed * Time.deltaTime;
-        //Debug.Log("Current Direction: "+directionVector);
+
     }
 }
