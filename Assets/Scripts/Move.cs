@@ -11,14 +11,14 @@ public class Move : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        speed = 1.5;
+        speed = 1.5f;
 
     }
 
     // Update is called once per frame
     void Update()
     {
-        float direction = transform.rotation;
+        float direction = transform.rotation.z;
         switch (direction) {
             case 0:
                 transform.position = (Vector2)transform.position + Vector2.left * speed * Time.deltaTime;
