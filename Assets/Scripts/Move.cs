@@ -53,7 +53,7 @@ public class Move : MonoBehaviour
     }
 
     void OnCollisionStay2D(Collision2D collision){
-        transform.position = (Vector2)transform.position + directionVector *(speed * Time.deltaTime - acceleration * (Mathf.Pow(Time.deltaTime,2)));
+        transform.position = (Vector2)transform.position + directionVector *(speed * Time.deltaTime - acceleration * (Mathf.Pow(Time.deltaTime,2))/2);
         Debug.Log("Collision detected");
     }
 }
