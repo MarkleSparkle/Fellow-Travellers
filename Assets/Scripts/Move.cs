@@ -6,13 +6,15 @@ public class Move : MonoBehaviour
 {
 
     private float speed;
+    private float acceleration;
     public Vector2 originalDirection;
     private Vector2 directionVector;
 
     // Start is called before the first frame update
     void Start()
     {
-        speed = 1.5f;
+        speed = (Random.value) + 1;
+        acceleration = 2f;
 
         float direction = transform.eulerAngles.z;
         Debug.Log("Found rotation: " + direction);
@@ -46,6 +48,13 @@ public class Move : MonoBehaviour
     {
         transform.position = (Vector2)transform.position + directionVector * speed * Time.deltaTime;
 
+
+
+    }
+
+    void OnCollisionStay2D(Collision2D collision){
+        transform.position = (Vector2)transform.position + directionVector *(speed * Time.deltaTime - acceleration * (Mathf.Pow(Time.deltaTime,2)));
+        Debug.Log("Collision detected");
     }
 }
 

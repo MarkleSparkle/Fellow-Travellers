@@ -13,11 +13,11 @@ public class CarSpawner : MonoBehaviour
     private float maxTime;
     private float currentTime;
     public GameObject uglyCar;
-
+    public BoxCollider2D carBox;
     // Start is called before the first frame update
     void Start()
     {
-        maxTime = 5;
+        maxTime = 2;
         currentTime = 0;
     }
 
@@ -28,6 +28,9 @@ public class CarSpawner : MonoBehaviour
         if (currentTime > maxTime)
         {//we will create a new column object
             GameObject newCar = Instantiate(uglyCar);
+            carBox = newCar.AddComponent<BoxCollider2D>() as BoxCollider2D;
+            carBox.size = new Vector2(2f, 1f);
+            carBox.isTrigger = false;
 
             //getting the camera dimensions
             Camera camera = Camera.main;
@@ -38,6 +41,7 @@ public class CarSpawner : MonoBehaviour
             float horizontalMax = halfWidth;
             float verticalMin = -halfHeight;
             float verticalMax = halfHeight;
+            float offset = 1; //Offset distance, we'll adjust this to the background graphics since i don't know the exact lane widths
 
 
             //choose position
@@ -46,6 +50,7 @@ public class CarSpawner : MonoBehaviour
 
             Vector2 direction;
             Vector2 startingPoint = new Vector2();
+            Vector2 offsetDirection;// lane offsets (i.e. cars coming from the right are offset upwards, into the "right lane")
             float changePoint;
             switch (randomDirection)//starting from the...
             {
@@ -56,7 +61,7 @@ public class CarSpawner : MonoBehaviour
                     startingPoint.x = horizontalMin;
                     changePoint = horizontalMin;
                     direction = Vector2.right;
-
+                    offsetDirection = Vector2.down; //These will make the cars spawn in the correct lane, so they won't collide headlong
                     //rotation
                     newCar.transform.Rotate(0,0,180);
 
@@ -68,6 +73,7 @@ public class CarSpawner : MonoBehaviour
                     startingPoint.y = verticalMax;
                     changePoint = verticalMax;
                     direction = Vector2.up;
+                    offsetDirection = Vector2.left;
 
                     //rotation
                     newCar.transform.Rotate(0, 0, 90);
@@ -78,6 +84,7 @@ public class CarSpawner : MonoBehaviour
                     startingPoint.x = horizontalMax;
                     changePoint = horizontalMax;
                     direction = Vector2.right;
+                    offsetDirection = Vector2.up;
 
                     break;
                 case 3://...bottom
@@ -85,6 +92,7 @@ public class CarSpawner : MonoBehaviour
                     startingPoint.y = verticalMin;
                     changePoint = verticalMin;
                     direction = Vector2.up;
+                    offsetDirection = Vector2.right;
 
                     //rotation
                     newCar.transform.Rotate(0, 0, 270);
@@ -94,8 +102,9 @@ public class CarSpawner : MonoBehaviour
                     Debug.Log("ERROR: " + randomDirection);
 
                     //starting point is (0,0)
-                    changePoint = 0;
+                    changePoint = verticalMin;
                     direction = Vector2.up;
+                    offsetDirection = Vector2.right;
 
                     newCar.transform.Rotate(0,0,270);
 
@@ -107,10 +116,9 @@ public class CarSpawner : MonoBehaviour
             //Move script = newCar.GetComponent<Move>;
 
 
-            //setting new car's position
+            //setting new car's main position
             newCar.transform.position = (Vector2) transform.position +
-            direction * changePoint;
-
+            direction * changePoint + (Vector2) transform.position + offsetDirection * offset;
 
             Destroy(newCar, 15f);
             currentTime = 0;//resetting the current time after spawning a car
