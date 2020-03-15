@@ -77,6 +77,7 @@ public class Move : MonoBehaviour
     {
         collided = false;
         Debug.Log("Exit Collision " + collided);
+
     }
 }
 
