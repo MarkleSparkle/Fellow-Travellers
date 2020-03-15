@@ -9,30 +9,37 @@ public class Move : MonoBehaviour
     private float acceleration;
     public Vector2 originalDirection;
     private Vector2 directionVector;
-
+    private Vector2 accelVector;
+    private bool collided = false;
+    private float variableSpeed;
     // Start is called before the first frame update
     void Start()
     {
         speed = (Random.value) + 1;
         acceleration = 2f;
+        variableSpeed = speed;
 
         float direction = transform.eulerAngles.z;
         Debug.Log("Found rotation: " + direction);
         switch (direction) {
             case 0:
                 directionVector = Vector2.left;
+                accelVector = Vector2.right;
                 break;
 
             case 90:
                 directionVector = Vector2.down;
+                accelVector = Vector2.up;
                 break;
 
             case 180:
                 directionVector = Vector2.right;
+                accelVector = Vector2.left;
                 break;
 
             case 270:
                 directionVector = Vector2.up;
+                accelVector = Vector2.down;
                 break;
 
             default:
@@ -46,15 +53,30 @@ public class Move : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.position = (Vector2)transform.position + directionVector * speed * Time.deltaTime;
+        if(collided == true) // collision detected
+        {
+            variableSpeed -= 0.005f;
+            transform.position = (Vector2)transform.position + directionVector * variableSpeed * Time.deltaTime;
 
+        }
+        else
+        {
+            transform.position = (Vector2)transform.position + directionVector * speed * Time.deltaTime;
+        }
 
 
     }
 
-    void OnCollisionStay2D(Collision2D collision){
-        transform.position = (Vector2)transform.position + directionVector *(speed * Time.deltaTime - acceleration * (Mathf.Pow(Time.deltaTime,2))/2);
-        Debug.Log("Collision detected");
+    void OnTriggerStay2D(Collider2D collision){
+        collided = true;
+        Debug.Log("Collision detected "+collided);
+        
+    }
+
+    void OnTriggerExit2D()
+    {
+        collided = false;
+        Debug.Log("Exit Collision " + collided);
     }
 }
 
