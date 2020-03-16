@@ -29,8 +29,9 @@ public class CarSpawner : MonoBehaviour
         {//we will create a new column object
             GameObject newCar = Instantiate(uglyCar);
             carBox = newCar.AddComponent<BoxCollider2D>() as BoxCollider2D;
-            carBox.size = new Vector2(2f, 0.3f);
+            carBox.size = new Vector2(1.2f, 0.3f);
             carBox.isTrigger = true;
+            carBox.offset = new Vector2(-0.25f, 0);
 
             //getting the camera dimensions
             Camera camera = Camera.main;

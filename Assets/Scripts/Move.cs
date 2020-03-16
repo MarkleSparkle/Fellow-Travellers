@@ -53,16 +53,24 @@ public class Move : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(collided == true) // collision detected
+        if (collided == true && variableSpeed > 0) // collision detected
         {
-            variableSpeed -= 0.005f;
-            transform.position = (Vector2)transform.position + directionVector * variableSpeed * Time.deltaTime;
-
+            variableSpeed -= 0.025f;
+        }
+        else if (collided == true && variableSpeed <= 0)
+        {
+            variableSpeed = 0;
+        }
+        else if(collided == false && variableSpeed < speed)
+        {
+            variableSpeed += 0.025f;
         }
         else
         {
-            transform.position = (Vector2)transform.position + directionVector * speed * Time.deltaTime;
+            variableSpeed = speed;
         }
+            transform.position = (Vector2)transform.position + directionVector * variableSpeed * Time.deltaTime;
+        
 
 
     }
