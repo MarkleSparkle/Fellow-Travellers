@@ -12,6 +12,7 @@ public class Move : MonoBehaviour
     private Vector2 accelVector;
     private bool collided = false;
     private float variableSpeed;
+    private Vector2 relativeSpeed;
     // Start is called before the first frame update
     void Start()
     {
@@ -64,10 +65,12 @@ public class Move : MonoBehaviour
         else if(collided == false && variableSpeed < speed)
         {
             variableSpeed += 0.025f;
+            
         }
         else
         {
             variableSpeed = speed;
+            
         }
             transform.position = (Vector2)transform.position + directionVector * variableSpeed * Time.deltaTime;
         
@@ -75,7 +78,7 @@ public class Move : MonoBehaviour
 
     }
 
-    void OnTriggerStay2D(Collider2D collision){
+    void OnTriggerStay2D(Collider2D collider){
         collided = true;
         Debug.Log("Collision detected "+collided);
         
