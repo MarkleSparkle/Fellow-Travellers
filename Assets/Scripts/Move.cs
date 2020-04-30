@@ -7,16 +7,14 @@ public class Move : MonoBehaviour
 
     private float speed;
     private float acceleration;
-    public Vector2 originalDirection;
     private Vector2 directionVector;
     private Vector2 accelVector;
     private bool collided = false;
     private float variableSpeed;
-    private Vector2 relativeSpeed;
     // Start is called before the first frame update
     void Start()
     {
-        speed = (Random.value) + 1;
+        speed = 1.5f;
         acceleration = 2f;
         variableSpeed = speed;
 
@@ -79,8 +77,41 @@ public class Move : MonoBehaviour
     }
 
     void OnTriggerStay2D(Collider2D collider){
-        collided = true;
-        Debug.Log("Collision detected "+collided);
+        Vector2 colliderPosition = collider.attachedRigidbody.transform.position;
+        Vector2 relativeDisplacement = new Vector2(0,0);
+        float parallelPosition = 0;
+        float normalPosition = 0;
+
+        relativeDisplacement.x = transform.position.x - colliderPosition.x;
+        relativeDisplacement.y = transform.position.y - colliderPosition.y;
+
+        if(directionVector == Vector2.down)
+        {
+            parallelPosition = relativeDisplacement.y * -1;
+            normalPosition = relativeDisplacement.x;
+        }
+        else if(directionVector == Vector2.up)
+        {
+            parallelPosition = relativeDisplacement.y;
+            normalPosition = relativeDisplacement.x;
+        }
+        else if(directionVector == Vector2.right)
+        {
+            parallelPosition = relativeDisplacement.x;
+            normalPosition = relativeDisplacement.y;
+        }
+        else if(directionVector == Vector2.left)
+        {
+            parallelPosition = relativeDisplacement.x * -1;
+            normalPosition = relativeDisplacement.y;
+        }
+        
+
+        if (parallelPosition < 0 && Mathf.Abs(normalPosition) < 0.7) { //Only if the car is behind the detected collider, and along the same trajectory, should the stopping condition activate
+            collided = true;
+            Debug.Log("Collision detected " + collided);
+            Debug.Log("Relative Position " + relativeDisplacement);
+        }
         
     }
 
