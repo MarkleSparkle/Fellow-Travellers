@@ -3,42 +3,41 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Move : MonoBehaviour
-{
+{//this class now controls movement, proximity sensing, and despawn sequence
 
     private float speed;
     private float acceleration;
     private Vector2 directionVector;
-    private Vector2 accelVector;
-    private bool collided = false;
     private float variableSpeed;
+   
     // Start is called before the first frame update
     void Start()
     {
         speed = 1.5f;
-        acceleration = 2f;
+        acceleration = speed/1.2f;
         variableSpeed = speed;
 
         float direction = transform.eulerAngles.z;
-        Debug.Log("Found rotation: " + direction);
+        //Debug.Log("Found rotation: " + direction);
         switch (direction) {
             case 0:
                 directionVector = Vector2.left;
-                accelVector = Vector2.right;
+                
                 break;
 
             case 90:
                 directionVector = Vector2.down;
-                accelVector = Vector2.up;
+                
                 break;
 
             case 180:
                 directionVector = Vector2.right;
-                accelVector = Vector2.left;
+                
                 break;
 
             case 270:
                 directionVector = Vector2.up;
-                accelVector = Vector2.down;
+                
                 break;
 
             default:
@@ -46,21 +45,37 @@ public class Move : MonoBehaviour
                 break;
         }
 
-        Debug.Log("Direction Assigned: " + directionVector);
+        //Debug.Log("Direction Assigned: " + directionVector);
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (collided == true && variableSpeed > 0) // collision detected
+        Camera camera = Camera.main;//redeclaring these in this script so that cars know when to despawn
+        float halfHeight = camera.orthographicSize;
+        float halfWidth = camera.aspect * halfHeight;
+        float horizontalMin = -halfWidth - 1.2f;
+        float horizontalMax = halfWidth + 1.2f;
+        float verticalMin = -halfHeight - 1.2f;
+        float verticalMax = halfHeight + 1.2f;
+
+        float stoppingDistance = 1.2f;
+        int layerMask = Physics2D.DefaultRaycastLayers;
+        Vector2 origin = (Vector2)transform.position + directionVector;
+
+        RaycastHit2D cast = Physics2D.Raycast(origin, directionVector, stoppingDistance, layerMask, 0, 0.5f);
+        Debug.DrawRay(origin, directionVector, Color.red);
+
+        if (cast.collider != null && variableSpeed > 0)
         {
-            variableSpeed -= 0.025f;
+            variableSpeed -= 0.1f;
+            Debug.Log("raycast hit body "+ cast.rigidbody + "raycast hit collider "+ cast.collider);
         }
-        else if (collided == true && variableSpeed <= 0)
+        else if (cast.collider != null && variableSpeed <= 0)
         {
             variableSpeed = 0;
         }
-        else if(collided == false && variableSpeed < speed)
+        else if(cast.collider == null && variableSpeed < speed)
         {
             variableSpeed += 0.025f;
             
@@ -70,57 +85,31 @@ public class Move : MonoBehaviour
             variableSpeed = speed;
             
         }
+
             transform.position = (Vector2)transform.position + directionVector * variableSpeed * Time.deltaTime;
-        
+
+        //cars will now despawn themsevles from their own move scripts
+        if (transform.position.x > horizontalMax && directionVector == Vector2.right)
+        {
+            Destroy(gameObject);
+        }
+        else if (transform.position.x < horizontalMin && directionVector == Vector2.left)
+        {
+            Destroy(gameObject);
+        }
+        else if (transform.position.y > verticalMax && directionVector == Vector2.up)
+        {
+            Destroy(gameObject);
+        }
+        else if (transform.position.y < verticalMin && directionVector == Vector2.down)
+        {
+            Destroy(gameObject);
+        }
 
 
     }
 
-    void OnTriggerStay2D(Collider2D collider){
-        Vector2 colliderPosition = collider.attachedRigidbody.transform.position;
-        Vector2 relativeDisplacement = new Vector2(0,0);
-        float parallelPosition = 0;
-        float normalPosition = 0;
-
-        relativeDisplacement.x = transform.position.x - colliderPosition.x;
-        relativeDisplacement.y = transform.position.y - colliderPosition.y;
-
-        if(directionVector == Vector2.down)
-        {
-            parallelPosition = relativeDisplacement.y * -1;
-            normalPosition = relativeDisplacement.x;
-        }
-        else if(directionVector == Vector2.up)
-        {
-            parallelPosition = relativeDisplacement.y;
-            normalPosition = relativeDisplacement.x;
-        }
-        else if(directionVector == Vector2.right)
-        {
-            parallelPosition = relativeDisplacement.x;
-            normalPosition = relativeDisplacement.y;
-        }
-        else if(directionVector == Vector2.left)
-        {
-            parallelPosition = relativeDisplacement.x * -1;
-            normalPosition = relativeDisplacement.y;
-        }
-        
-
-        if (parallelPosition < 0 && Mathf.Abs(normalPosition) < 0.7) { //Only if the car is behind the detected collider, and along the same trajectory, should the stopping condition activate
-            collided = true;
-            Debug.Log("Collision detected " + collided);
-            Debug.Log("Relative Position " + relativeDisplacement);
-        }
-        
-    }
-
-    void OnTriggerExit2D()
-    {
-        collided = false;
-        Debug.Log("Exit Collision " + collided);
-
-    }
+    
 }
 
 //DETECTING PROXIMITY STUFF!

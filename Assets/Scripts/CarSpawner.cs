@@ -24,32 +24,30 @@ public class CarSpawner : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Camera camera = Camera.main;
+        float halfHeight = camera.orthographicSize;
+        float halfWidth = camera.aspect * halfHeight;
+        float horizontalMin = -halfWidth - 1.2f;
+        float horizontalMax = halfWidth + 1.2f;
+        float verticalMin = -halfHeight - 1.2f;
+        float verticalMax = halfHeight + 1.2f;
+        Vector2 direction;
+
         //creates a new car after a certain amount of time
-        if (currentTime > maxTime)
+        if (currentTime > maxTime)//control of car despawn sequence has been moved to the individual move scripts.  in essence, cars now self destruct
         {//we will create a new column object
             GameObject newCar = Instantiate(uglyCar);
             carBox = newCar.AddComponent<BoxCollider2D>() as BoxCollider2D;
-            carBox.size = new Vector2(1.2f, 0.3f);
-            carBox.isTrigger = true;
-            carBox.offset = new Vector2(-0.25f, 0);
+            carBox.isTrigger = true;           
 
-            //getting the camera dimensions
-            Camera camera = Camera.main;
-            float halfHeight = camera.orthographicSize;
-            float halfWidth = camera.aspect * halfHeight;
-
-            float horizontalMin = -halfWidth;
-            float horizontalMax = halfWidth;
-            float verticalMin = -halfHeight;
-            float verticalMax = halfHeight;
+            
             float offset = 1; //Offset distance, we'll adjust this to the background graphics since i don't know the exact lane widths
 
 
             //choose position
             float randomDirection = Mathf.Round(Random.value * 3);
-            Debug.Log("Generated Direction: " + randomDirection);
+            //Debug.Log("Generated Direction: " + randomDirection);
 
-            Vector2 direction;
             Vector2 startingPoint = new Vector2();
             Vector2 offsetDirection;// lane offsets (i.e. cars coming from the right are offset upwards, into the "right lane")
             float changePoint;
@@ -100,7 +98,7 @@ public class CarSpawner : MonoBehaviour
 
                     break;
                 default://just in case there are decimals
-                    Debug.Log("ERROR: " + randomDirection);
+                    //Debug.Log("ERROR: " + randomDirection);
 
                     //starting point is (0,0)
                     changePoint = verticalMin;
@@ -121,7 +119,9 @@ public class CarSpawner : MonoBehaviour
             newCar.transform.position = (Vector2) transform.position +
             direction * changePoint + (Vector2) transform.position + offsetDirection * offset;
 
-            Destroy(newCar, 15f);
+            //Destroy(newCar, 15f);
+
+
             currentTime = 0;//resetting the current time after spawning a car
         }
 
