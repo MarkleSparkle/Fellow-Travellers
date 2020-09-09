@@ -9,13 +9,17 @@ public class Move : MonoBehaviour
     private float acceleration;
     private Vector2 directionVector;
     private float variableSpeed;
-   
+    private float angerPoints = 0f;
+    private AngerManagement angerManagement;
     // Start is called before the first frame update
     void Start()
     {
-        speed = 1.5f;
+        speed = 1.5f;//initialize kinematic variables
         acceleration = speed/1.2f;
         variableSpeed = speed;
+
+        //set up communication with angermanagement script
+        angerManagement = GameObject.FindObjectOfType<AngerManagement>();
 
         float direction = transform.eulerAngles.z;
         //Debug.Log("Found rotation: " + direction);
@@ -66,21 +70,25 @@ public class Move : MonoBehaviour
         RaycastHit2D cast = Physics2D.Raycast(origin, directionVector, stoppingDistance, layerMask, 0, 0.5f);
         Debug.DrawRay(origin, directionVector, Color.red);
 
-        if (cast.collider != null && variableSpeed > 0)
+        if (cast.collider != null && variableSpeed > 0)//decelerating. magnitude of acceleration will eventually change based on stopping distance (which increases anger points)
         {
             variableSpeed -= 0.1f;
             Debug.Log("raycast hit body "+ cast.rigidbody + "raycast hit collider "+ cast.collider);
+            angerPoints += Time.deltaTime;
+            angerManagement.updateAngerPoints(angerPoints);
         }
-        else if (cast.collider != null && variableSpeed <= 0)
+        else if (cast.collider != null && variableSpeed <= 0)//stays  stoppped while rays detect stuff. anger points are generated when at a complete stop
         {
             variableSpeed = 0;
+            angerPoints += Time.deltaTime;
+            angerManagement.updateAngerPoints(angerPoints);
         }
-        else if(cast.collider == null && variableSpeed < speed)
+        else if(cast.collider == null && variableSpeed < speed)//rays no longer detecting stuff, car accelerates
         {
             variableSpeed += 0.025f;
             
         }
-        else
+        else//constant speed under normal conditions
         {
             variableSpeed = speed;
             
