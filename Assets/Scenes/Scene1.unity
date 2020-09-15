@@ -619,8 +619,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5097782aef8779f408ec19e8abe5134a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fellowTraveller: {fileID: 3037115299334167230, guid: 9861ce246d93ffe46a22c0cf7d6cd8d7,
+  blueFT: {fileID: 3037115299334167230, guid: 9861ce246d93ffe46a22c0cf7d6cd8d7, type: 3}
+  blackFT: {fileID: 5877876201678020741, guid: 45ac8ad54f550a2458c0e37416d47455, type: 3}
+  yellowFT: {fileID: 4257263881915213152, guid: 4612360da3dba614b9cdb53996b46e0e,
     type: 3}
+  whiteFT: {fileID: 9125544954182208865, guid: 247136d38a9c58146ade8ebecd7401ef, type: 3}
+  fusiaFT: {fileID: 18831903238447491, guid: d556d997fb683d04e9233501a10f4581, type: 3}
+  orangeFT: {fileID: 7987730078682834544, guid: 17c31f9c74a3324439487849e64f3aa0,
+    type: 3}
+  greenFT: {fileID: 8609698769887200548, guid: 5814061e64e6e0c43b6980016bfb6f31, type: 3}
   carBox: {fileID: 0}
 --- !u!4 &1863275568
 Transform:

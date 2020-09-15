@@ -74,13 +74,13 @@ public class Move : MonoBehaviour
         {
             variableSpeed -= 0.1f;
             Debug.Log("raycast hit body "+ cast.rigidbody + "raycast hit collider "+ cast.collider);
-            angerPoints += Time.deltaTime;
+            angerPoints += Mathf.Round((Time.deltaTime) / 1000);
             angerManagement.updateAngerPoints(angerPoints);
         }
         else if (cast.collider != null && variableSpeed <= 0)//stays  stoppped while rays detect stuff. anger points are generated when at a complete stop
         {
             variableSpeed = 0;
-            angerPoints += Time.deltaTime;
+            angerPoints += Mathf.Round((Time.deltaTime)/1000);
             angerManagement.updateAngerPoints(angerPoints);
         }
         else if(cast.collider == null && variableSpeed < speed)//rays no longer detecting stuff, car accelerates

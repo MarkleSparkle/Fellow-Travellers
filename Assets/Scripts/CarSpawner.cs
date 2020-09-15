@@ -12,7 +12,13 @@ public class CarSpawner : MonoBehaviour
 
     private float maxTime;
     private float currentTime;
-    public GameObject fellowTraveller;
+    public GameObject blueFT;
+    public GameObject blackFT;
+    public GameObject yellowFT;
+    public GameObject whiteFT;
+    public GameObject fusiaFT;
+    public GameObject orangeFT;
+    public GameObject greenFT;
     public BoxCollider2D carBox;
     // Start is called before the first frame update
     void Start()
@@ -36,7 +42,44 @@ public class CarSpawner : MonoBehaviour
         //creates a new car after a certain amount of time
         if (currentTime > maxTime)//control of car despawn sequence has been moved to the individual move scripts.  in essence, cars now self destruct
         {//we will create a new column object
-            GameObject newCar = Instantiate(fellowTraveller);
+            GameObject newCar;
+
+            float randomCar = Mathf.Round(Random.value*6);
+
+            switch (randomCar)
+            {
+                case 0:
+                    newCar = Instantiate(fusiaFT);
+                    break;
+
+                case 1:
+                    newCar = Instantiate(blueFT);
+                    break;
+
+                case 2:
+                    newCar = Instantiate(greenFT);
+                    break;
+
+                case 3:
+                    newCar = Instantiate(orangeFT);
+                    break;
+
+                case 4:
+                    newCar = Instantiate(blackFT);
+                    break;
+
+                case 5:
+                    newCar = Instantiate(whiteFT);
+                    break;
+
+                case 6:
+                    newCar = Instantiate(yellowFT);
+                    break;
+
+                default:
+                    newCar = Instantiate(blueFT);
+                    break; 
+            }
             carBox = newCar.AddComponent<BoxCollider2D>() as BoxCollider2D;
             carBox.isTrigger = true;
 
