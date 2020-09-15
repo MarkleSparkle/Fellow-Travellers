@@ -12,7 +12,7 @@ public class CarSpawner : MonoBehaviour
 
     private float maxTime;
     private float currentTime;
-    public GameObject uglyCar;
+    public GameObject fellowTraveller;
     public BoxCollider2D carBox;
     // Start is called before the first frame update
     void Start()
@@ -36,13 +36,22 @@ public class CarSpawner : MonoBehaviour
         //creates a new car after a certain amount of time
         if (currentTime > maxTime)//control of car despawn sequence has been moved to the individual move scripts.  in essence, cars now self destruct
         {//we will create a new column object
-            GameObject newCar = Instantiate(uglyCar);
+            GameObject newCar = Instantiate(fellowTraveller);
             carBox = newCar.AddComponent<BoxCollider2D>() as BoxCollider2D;
-            carBox.isTrigger = true;           
+            carBox.isTrigger = true;
 
-            
-            float offset = 1; //Offset distance, we'll adjust this to the background graphics since i don't know the exact lane widths
+            float randomOffset = Mathf.Round(Random.value);
+            float offset = 0; //lane designation for cars
 
+            switch (randomOffset)//cars are randomly assigned to a lane (since we for whatever reason decided on double lanes)
+            {
+                case 0:
+                    offset = 0.6f;
+                    break;
+                case 1:
+                    offset = 1.5f;
+                    break;
+            }
 
             //choose position
             float randomDirection = Mathf.Round(Random.value * 3);
@@ -62,7 +71,7 @@ public class CarSpawner : MonoBehaviour
                     direction = Vector2.right;
                     offsetDirection = Vector2.down; //These will make the cars spawn in the correct lane, so they won't collide headlong
                     //rotation
-                    newCar.transform.Rotate(0,0,180);
+                    newCar.transform.Rotate(0,0,270);
 
                     break;
                 case 1:
@@ -75,7 +84,7 @@ public class CarSpawner : MonoBehaviour
                     offsetDirection = Vector2.left;
 
                     //rotation
-                    newCar.transform.Rotate(0, 0, 90);
+                    newCar.transform.Rotate(0, 0, 180);
 
                     break;
                 case 2://...right
@@ -84,8 +93,11 @@ public class CarSpawner : MonoBehaviour
                     changePoint = horizontalMax;
                     direction = Vector2.right;
                     offsetDirection = Vector2.up;
+                    //set rotation
+                    newCar.transform.Rotate(0, 0, 90);
 
                     break;
+
                 case 3://...bottom
 
                     startingPoint.y = verticalMin;
@@ -93,8 +105,7 @@ public class CarSpawner : MonoBehaviour
                     direction = Vector2.up;
                     offsetDirection = Vector2.right;
 
-                    //rotation
-                    newCar.transform.Rotate(0, 0, 270);
+                   
 
                     break;
                 default://just in case there are decimals

@@ -14,28 +14,28 @@ public class StoplineControl : MonoBehaviour
     {
         GameObject leftLine = Instantiate(stopLine);//Create left stopline
         leftLine.transform.Rotate(0, 0, 90);
-        leftLine.transform.position = new Vector3(-1.8f, -1, 0.1f);//approximated.  lines also need to be between the background and the cars on the Z axis
+        leftLine.transform.position = new Vector3(-2.4f, -1, 0.1f);//approximated.  lines also need to be between the background and the cars on the Z axis
         leftLine.transform.localScale = new Vector2(2, 2);//original prefab will be upscaled by a factor of 2. you made it too small, mark
         leftBox = leftLine.AddComponent<BoxCollider2D>() as BoxCollider2D;
         leftBox.isTrigger = true;
 
         GameObject rightLine = Instantiate(stopLine);//right side stopline
         rightLine.transform.Rotate(0, 0, 90);
-        rightLine.transform.position = new Vector3(2.8f, 1, 0.1f);
+        rightLine.transform.position = new Vector3(2.2f, 1, 0.1f);
         rightLine.transform.localScale = new Vector2(2, 2);
         rightBox = rightLine.AddComponent<BoxCollider2D>() as BoxCollider2D;
         rightBox.isTrigger = true;
 
 
         GameObject topLine = Instantiate(stopLine);//top line doesn't need rotation
-        topLine.transform.position = new Vector3(-0.5f, 2.2f, 0.1f);
+        topLine.transform.position = new Vector3(-1.1f, 2.2f, 0.1f);
         topLine.transform.localScale = new Vector2(2, 2);
         topBox = topLine.AddComponent<BoxCollider2D>() as BoxCollider2D;
         topBox.isTrigger = true;
         topBox.enabled = false;
 
         GameObject bottomLine = Instantiate(stopLine);//hahaha I'm totally losing it
-        bottomLine.transform.position = new Vector3(1.5f, -2.2f, 0.1f);
+        bottomLine.transform.position = new Vector3(0.9f, -2.2f, 0.1f);
         bottomLine.transform.localScale = new Vector2(2, 2);
         bottomBox = bottomLine.AddComponent<BoxCollider2D>() as BoxCollider2D;
         bottomBox.isTrigger = true;

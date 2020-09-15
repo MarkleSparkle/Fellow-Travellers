@@ -24,22 +24,22 @@ public class Move : MonoBehaviour
         float direction = transform.eulerAngles.z;
         //Debug.Log("Found rotation: " + direction);
         switch (direction) {
-            case 0:
+            case 90:
                 directionVector = Vector2.left;
                 
                 break;
 
-            case 90:
+            case 180:
                 directionVector = Vector2.down;
                 
                 break;
 
-            case 180:
+            case 270:
                 directionVector = Vector2.right;
                 
                 break;
 
-            case 270:
+            case 0:
                 directionVector = Vector2.up;
                 
                 break;
