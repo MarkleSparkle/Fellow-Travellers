@@ -44,7 +44,7 @@ public class CarSpawner : MonoBehaviour
         {//we will create a new column object
             GameObject newCar;
 
-            float randomCar = Mathf.Round(Random.value*6);
+            float randomCar = Random.Range(0, 7);
 
             switch (randomCar)
             {
@@ -83,7 +83,7 @@ public class CarSpawner : MonoBehaviour
             carBox = newCar.AddComponent<BoxCollider2D>() as BoxCollider2D;
             carBox.isTrigger = true;
 
-            float randomOffset = Mathf.Round(Random.value);
+            float randomOffset = Random.Range(0,2);
             float offset = 0; //lane designation for cars
 
             switch (randomOffset)//cars are randomly assigned to a lane (since we for whatever reason decided on double lanes)
@@ -97,7 +97,7 @@ public class CarSpawner : MonoBehaviour
             }
 
             //choose position
-            float randomDirection = Mathf.Round(Random.value * 3);
+            float randomDirection = Random.Range(0,4);
             //Debug.Log("Generated Direction: " + randomDirection);
 
             Vector2 startingPoint = new Vector2();
