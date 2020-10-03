@@ -77,6 +77,8 @@ Super common vehicles appear very often and come in many different colors to sil
 - Derailed Train - (no description)
 - Zeno - (no description)
 - Mongol Horde - (no description)
+- Hot Air Balloon - The hot air balloon arrives and falls into the middle of the intersection which stops all traffic (or just traffic in certain lanes) before it is either cleaned up by the company in trucks, or it takes off again. 
+- Hearse - Drives really slowly with a flashing light and forces all vehicles to stop on either side of the road.
 
 ## Effects
 These effects appear on some levels and add a layer of difficulty to them, but also opportunity for the player to reduce points, catch speeders or have more time to make choices and react.
