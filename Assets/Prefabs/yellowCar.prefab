@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 54306306791349500}
   - component: {fileID: 4675416980138017953}
-  - component: {fileID: -3640565206661094816}
+  - component: {fileID: -9174613556599438126}
   m_Layer: 0
   m_Name: yellowCar
   m_TagString: Untagged
@@ -82,7 +82,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &-3640565206661094816
+--- !u!114 &-9174613556599438126
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
