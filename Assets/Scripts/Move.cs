@@ -75,7 +75,7 @@ public class Move : MonoBehaviour
         if (cast.collider != null && variableSpeed > 0)//decelerating. magnitude of acceleration will eventually change based on stopping distance (which increases anger points)
         {
             variableSpeed -= 0.1f;
-            Debug.Log("raycast hit body "+ cast.rigidbody + "raycast hit collider "+ cast.collider);
+            //Debug.Log("raycast hit body "+ cast.rigidbody + "raycast hit collider "+ cast.collider);
             angerPoints += 0.0000001f;
             angerManagement.addAnger(angerPoints);
         }
