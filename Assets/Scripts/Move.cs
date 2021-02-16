@@ -8,6 +8,8 @@ public class Move : MonoBehaviour
 
     private float speed;
     private float acceleration;
+    private float stoppingDistance;
+    private Vector2 distance;
     private Vector2 directionVector;
     private float variableSpeed;
     private float angerPoints = 0f;
@@ -74,12 +76,16 @@ public class Move : MonoBehaviour
 
         if (cast.collider != null && variableSpeed > 0)//decelerating. magnitude of acceleration will eventually change based on stopping distance (which increases anger points)
         {
-            variableSpeed -= 0.1f;
+            distance = cast.collider.transform.position - transform.position; //proximity-based deceleration, so cars have an appropriate stopoing distance
+            stoppingDistance = distance.magnitude - 0.5f;
+            acceleration = (Mathf.Pow(speed, 2f))/ (2 * stoppingDistance);
+            variableSpeed -= (acceleration*Time.deltaTime);
+            Debug.Log(acceleration);
             //Debug.Log("raycast hit body "+ cast.rigidbody + "raycast hit collider "+ cast.collider);
             angerPoints += 0.0000001f;
             angerManagement.addAnger(angerPoints);
         }
-        else if (cast.collider != null && variableSpeed <= 0)//stays  stoppped while rays detect stuff. anger points are generated when at a complete stop
+        else if (cast.collider != null && variableSpeed <= 0.05)//stays  stoppped while rays detect stuff. anger points are generated when at a complete stop
         {
             variableSpeed = 0;
             angerPoints += 0.0000001f;
