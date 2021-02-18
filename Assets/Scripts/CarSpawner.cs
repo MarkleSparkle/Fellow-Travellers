@@ -12,6 +12,10 @@ public class CarSpawner : MonoBehaviour
 
     private float maxTime;
     private float currentTime;
+
+    private float colliderScale = 1;
+    
+    //Fellow Travellers
     public GameObject blueFT;
     public GameObject blackFT;
     public GameObject yellowFT;
@@ -19,6 +23,16 @@ public class CarSpawner : MonoBehaviour
     public GameObject fusiaFT;
     public GameObject orangeFT;
     public GameObject greenFT;
+
+    //Trucks
+    public GameObject blueTruck;
+    public GameObject blackTruck;
+    public GameObject yellowTruck;
+    public GameObject whiteTruck;
+    public GameObject redTruck;
+    public GameObject orangeTruck;
+    public GameObject greenTruck;
+
     public BoxCollider2D carBox;
     // Start is called before the first frame update
     void Start()
@@ -33,55 +47,102 @@ public class CarSpawner : MonoBehaviour
         Camera camera = Camera.main;
         float halfHeight = camera.orthographicSize;
         float halfWidth = camera.aspect * halfHeight;
-        float horizontalMin = -halfWidth - 1.2f;
-        float horizontalMax = halfWidth + 1.2f;
-        float verticalMin = -halfHeight - 1.2f;
-        float verticalMax = halfHeight + 1.2f;
+        float horizontalMin = -halfWidth - 2.4f;
+        float horizontalMax = halfWidth + 2.4f;
+        float verticalMin = -halfHeight - 2.4f;
+        float verticalMax = halfHeight + 2.4f;
         Vector2 direction;
 
         //creates a new car after a certain amount of time
         if (currentTime > maxTime)//control of car despawn sequence has been moved to the individual move scripts.  in essence, cars now self destruct
         {//we will create a new column object
             GameObject newCar;
+            float randomCharacter = Random.Range(0, 2);//random character type(car, truck)
+            float randomCar = Random.Range(0, 7);//random colour
 
-            float randomCar = Random.Range(0, 7);
-
-            switch (randomCar)
+            if (randomCharacter == 0)//select from Fellow Traveller list
             {
-                case 0:
-                    newCar = Instantiate(fusiaFT);
-                    break;
+                colliderScale = 1;
 
-                case 1:
-                    newCar = Instantiate(blueFT);
-                    break;
+                switch (randomCar)
+                {
+                    case 0:
+                        newCar = Instantiate(fusiaFT);
+                        break;
 
-                case 2:
-                    newCar = Instantiate(greenFT);
-                    break;
+                    case 1:
+                        newCar = Instantiate(blueFT);
+                        break;
 
-                case 3:
-                    newCar = Instantiate(orangeFT);
-                    break;
+                    case 2:
+                        newCar = Instantiate(greenFT);
+                        break;
 
-                case 4:
-                    newCar = Instantiate(blackFT);
-                    break;
+                    case 3:
+                        newCar = Instantiate(orangeFT);
+                        break;
 
-                case 5:
-                    newCar = Instantiate(whiteFT);
-                    break;
+                    case 4:
+                        newCar = Instantiate(blackFT);
+                        break;
 
-                case 6:
-                    newCar = Instantiate(yellowFT);
-                    break;
+                    case 5:
+                        newCar = Instantiate(whiteFT);
+                        break;
 
-                default:
-                    newCar = Instantiate(blueFT);
-                    break; 
+                    case 6:
+                        newCar = Instantiate(yellowFT);
+                        break;
+
+                    default:
+                        newCar = Instantiate(blueFT);
+                        break;
+                }
+
+            }
+
+            else//select from truck list
+            {
+                colliderScale = 1.4f;//the trucks are slightly larger
+
+                switch (randomCar)
+                {
+                    case 0:
+                        newCar = Instantiate(redTruck);
+                        break;
+
+                    case 1:
+                        newCar = Instantiate(blueTruck);
+                        break;
+
+                    case 2:
+                        newCar = Instantiate(greenTruck);
+                        break;
+
+                    case 3:
+                        newCar = Instantiate(orangeTruck);
+                        break;
+
+                    case 4:
+                        newCar = Instantiate(blackTruck);
+                        break;
+
+                    case 5:
+                        newCar = Instantiate(whiteTruck);
+                        break;
+
+                    case 6:
+                        newCar = Instantiate(yellowTruck);
+                        break;
+
+                    default:
+                        newCar = Instantiate(blueTruck);
+                        break;
+                }
             }
             carBox = newCar.AddComponent<BoxCollider2D>() as BoxCollider2D;
             carBox.isTrigger = true;
+            carBox.size = new Vector2(colliderScale, colliderScale);
 
             float randomOffset = Random.Range(0,2);
             float offset = 0; //lane designation for cars

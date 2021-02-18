@@ -12,6 +12,7 @@ public class Move : MonoBehaviour
     private Vector2 distance;
     private Vector2 directionVector;
     private float variableSpeed;
+    private float maxStoppingDistance;
     private float angerPoints = 0f;
     public angerBarManager angerManagement;
     
@@ -67,17 +68,18 @@ public class Move : MonoBehaviour
         float verticalMin = -halfHeight - 1.2f;
         float verticalMax = halfHeight + 1.2f;
 
-        float stoppingDistance = 1.2f;
         int layerMask = Physics2D.DefaultRaycastLayers;
-        Vector2 origin = (Vector2)transform.position + directionVector;
+        Vector2 origin = (Vector2)transform.position + 0.6f*directionVector;//raycasts must originate in front of the car's hit box so it does not detect itself
 
-        RaycastHit2D cast = Physics2D.Raycast(origin, directionVector, stoppingDistance, layerMask, 0, 0.5f);
-        Debug.DrawRay(origin, directionVector, Color.red);
+        maxStoppingDistance = 1.6f;
 
-        if (cast.collider != null && variableSpeed > 0)//decelerating. magnitude of acceleration will eventually change based on stopping distance (which increases anger points)
+        RaycastHit2D cast = Physics2D.Raycast(origin, directionVector, maxStoppingDistance, layerMask, 0, 0.5f);
+        Debug.DrawRay(origin, (directionVector*maxStoppingDistance), Color.red);
+
+        if (cast.collider != null && variableSpeed > 0)
         {
-            distance = cast.collider.transform.position - transform.position; //proximity-based deceleration, so cars have an appropriate stopoing distance
-            stoppingDistance = distance.magnitude - 0.5f;
+            distance = (Vector2)cast.collider.transform.position - (Vector2)transform.position; //proximity-based deceleration, so cars have an appropriate stopping distance
+            stoppingDistance = distance.magnitude - 0.1f;
             acceleration = (Mathf.Pow(speed, 2f))/ (2 * stoppingDistance);
             variableSpeed -= (acceleration*Time.deltaTime);
             Debug.Log(acceleration);
