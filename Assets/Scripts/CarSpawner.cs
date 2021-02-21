@@ -54,8 +54,8 @@ public class CarSpawner : MonoBehaviour
         Vector2 direction;
 
         //creates a new car after a certain amount of time
-        if (currentTime > maxTime)//control of car despawn sequence has been moved to the individual move scripts.  in essence, cars now self destruct
-        {//we will create a new column object
+        if (currentTime > maxTime)
+        {
             GameObject newCar;
             float randomCharacter = Random.Range(0, 2);//random character type(car, truck)
             float randomCar = Random.Range(0, 7);//random colour
@@ -103,7 +103,7 @@ public class CarSpawner : MonoBehaviour
 
             else//select from truck list
             {
-                colliderScale = 1.4f;//the trucks are slightly larger
+                colliderScale = 1.2f;//the trucks are slightly larger
 
                 switch (randomCar)
                 {
@@ -150,7 +150,7 @@ public class CarSpawner : MonoBehaviour
             switch (randomOffset)//cars are randomly assigned to a lane (since we for whatever reason decided on double lanes)
             {
                 case 0:
-                    offset = 0.6f;
+                    offset = 0.5f;
                     break;
                 case 1:
                     offset = 1.5f;
@@ -173,7 +173,7 @@ public class CarSpawner : MonoBehaviour
                     startingPoint.x = horizontalMin;
                     changePoint = horizontalMin;
                     direction = Vector2.right;
-                    offsetDirection = Vector2.down; //These will make the cars spawn in the correct lane, so they won't collide headlong
+                    offsetDirection = Vector2.down; 
                     //rotation
                     newCar.transform.Rotate(0,0,270);
 

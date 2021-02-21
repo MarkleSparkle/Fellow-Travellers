@@ -1,11 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-//using UnityEngine.UI;
 
-public class Move : MonoBehaviour
-{//this class now controls movement, proximity sensing, and despawn sequence
-
+public class TruckMove : MonoBehaviour
+{
     private float speed;
     private float acceleration;
     private float stoppingDistance;
@@ -16,46 +14,45 @@ public class Move : MonoBehaviour
     private float angerGeneration;
     private float angerPoints = 0f;
     public angerBarManager angerManagement;
-    
 
+    // Start is called before the first frame update
     void Start()
     {
         speed = 1.5f;//initialize kinematic variables
-        acceleration = speed/1.2f;
+        acceleration = speed / 1.2f;
         variableSpeed = speed;
 
         //set up communication with anger slider script
         angerManagement = GameObject.FindObjectOfType<angerBarManager>();
-        
+
         float direction = transform.eulerAngles.z;
-        //Debug.Log("Found rotation: " + direction);
-        switch (direction) {
+
+        switch (direction)
+        {
             case 90:
                 directionVector = Vector2.left;
-                
+
                 break;
 
             case 180:
                 directionVector = Vector2.down;
-                
+
                 break;
 
             case 270:
                 directionVector = Vector2.right;
-                
+
                 break;
 
             case 0:
                 directionVector = Vector2.up;
-                
+
                 break;
 
             default:
-                Debug.Log("No selection found for "+direction+" degrees.");
+                Debug.Log("No selection found for " + direction + " degrees.");
                 break;
         }
-
-        //Debug.Log("Direction Assigned: " + directionVector);
     }
 
     // Update is called once per frame
@@ -69,22 +66,22 @@ public class Move : MonoBehaviour
         float verticalMin = -halfHeight - 1.2f;
         float verticalMax = halfHeight + 1.2f;
 
-        angerGeneration = 0.001f * Time.timeScale;
+        angerGeneration = 0.01f * Time.timeScale;
 
         int layerMask = Physics2D.DefaultRaycastLayers;
-        Vector2 origin = (Vector2)transform.position + 0.6f*directionVector;//raycasts must originate in front of the car's hit box so it does not detect itself
+        Vector2 origin = (Vector2)transform.position + 0.7f * directionVector;//raycasts must originate in front of the car's hit box so it does not detect itself
 
-        maxStoppingDistance = 1.6f;
+        maxStoppingDistance = 1.4f;
 
         RaycastHit2D cast = Physics2D.Raycast(origin, directionVector, maxStoppingDistance, layerMask, 0, 0.5f);
-        Debug.DrawRay(origin, (directionVector*maxStoppingDistance), Color.red);
+        Debug.DrawRay(origin, (directionVector * maxStoppingDistance), Color.red);
 
         if (cast.collider != null && variableSpeed > 0)
         {
             distance = (Vector2)cast.collider.transform.position - (Vector2)transform.position; //proximity-based deceleration, so cars have an appropriate stopping distance
-            stoppingDistance = distance.magnitude - 0.1f;
-            acceleration = (Mathf.Pow(speed, 2f))/ (2 * stoppingDistance);
-            variableSpeed -= (acceleration*Time.deltaTime);
+            stoppingDistance = distance.magnitude - 0.2f;
+            acceleration = (Mathf.Pow(speed, 2f)) / (2 * stoppingDistance);
+            variableSpeed -= (acceleration * Time.deltaTime);
             Debug.Log(acceleration);
             //Debug.Log("raycast hit body "+ cast.rigidbody + "raycast hit collider "+ cast.collider);
             angerPoints = angerGeneration;
@@ -96,20 +93,19 @@ public class Move : MonoBehaviour
             angerPoints = angerGeneration;
             angerManagement.addAnger(angerPoints);
         }
-        else if(cast.collider == null && variableSpeed < speed)//rays no longer detecting stuff, car accelerates
+        else if (cast.collider == null && variableSpeed < speed)//rays no longer detecting stuff, car accelerates
         {
             variableSpeed += 0.025f;
-            
+
         }
         else//constant speed in the absence of obstructions
         {
             variableSpeed = speed;
-            
+
         }
 
-            transform.position = (Vector2)transform.position + directionVector * variableSpeed * Time.deltaTime;
+        transform.position = (Vector2)transform.position + directionVector * variableSpeed * Time.deltaTime;
 
-        //cars will now despawn themsevles from their own move scripts
         if (transform.position.x > horizontalMax && directionVector == Vector2.right)
         {
             Destroy(gameObject);
@@ -127,11 +123,5 @@ public class Move : MonoBehaviour
             Destroy(gameObject);
         }
 
-
     }
-
-    
 }
-
-//DETECTING PROXIMITY STUFF!
-//https://forum.unity.com/threads/clean-est-way-to-find-nearest-object-of-many-c.44315/

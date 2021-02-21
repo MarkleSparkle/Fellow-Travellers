@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9212368108160675963}
   - component: {fileID: 3333014610768065138}
+  - component: {fileID: 8352285869441502637}
   m_Layer: 0
   m_Name: whiteTruck
   m_TagString: Untagged
@@ -81,3 +82,16 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &8352285869441502637
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2148217174773317898}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e1518ea5d6d7e204bb005d1c35e2627d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  angerManagement: {fileID: 0}
