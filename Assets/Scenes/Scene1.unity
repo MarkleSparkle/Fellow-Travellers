@@ -3330,6 +3330,8 @@ MonoBehaviour:
     type: 3}
   greenTruck: {fileID: 6026204711290503204, guid: 0c4ea6e55bb329d44901e9e90de30ccc,
     type: 3}
+  blackCopCar: {fileID: 1319001018984991448, guid: e4da08cd54c39e44797ccfa9da8aa7f1,
+    type: 3}
   carBox: {fileID: 0}
 --- !u!4 &1863275568
 Transform:

@@ -33,6 +33,8 @@ public class CarSpawner : MonoBehaviour
     public GameObject orangeTruck;
     public GameObject greenTruck;
 
+    public GameObject blackCopCar;
+
     public BoxCollider2D carBox;
     // Start is called before the first frame update
     void Start()
@@ -57,10 +59,10 @@ public class CarSpawner : MonoBehaviour
         if (currentTime > maxTime)
         {
             GameObject newCar;
-            float randomCharacter = Random.Range(0, 2);//random character type(car, truck)
+            float randomCharacter = Random.Range(0, 6);//random character type(car, truck)
             float randomCar = Random.Range(0, 7);//random colour
 
-            if (randomCharacter == 0)//select from Fellow Traveller list
+            if (randomCharacter == 0 || randomCharacter == 1 || randomCharacter == 2)//select from Fellow Traveller list
             {
                 colliderScale = 1;
 
@@ -101,7 +103,7 @@ public class CarSpawner : MonoBehaviour
 
             }
 
-            else//select from truck list
+            else if (randomCharacter == 4 || randomCharacter == 5)//select from truck list
             {
                 colliderScale = 1.2f;//the trucks are slightly larger
 
@@ -140,6 +142,12 @@ public class CarSpawner : MonoBehaviour
                         break;
                 }
             }
+            else
+            {
+                colliderScale = 1;
+                newCar = Instantiate(blackCopCar);
+            }
+
             carBox = newCar.AddComponent<BoxCollider2D>() as BoxCollider2D;
             carBox.isTrigger = true;
             carBox.size = new Vector2(colliderScale, colliderScale);
