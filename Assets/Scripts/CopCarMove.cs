@@ -11,17 +11,7 @@ public class CopCarMove : MonoBehaviour
     private Vector2 directionVector;
     private float variableSpeed;
     private float maxStoppingDistance;
-    private Vector2 offsetDirection;
-    private Vector2 offsetCastOrigin;
-    private float offset;
-    private float maxOffset;
-    private float minOffset;
-    private float median;
-    private float offsetSpeed;
-    private float variableOffsetSpeed;
-    private float offsetAcceleration;
-    private float targetOffset;
-    private float elapsedOffset;
+    
 
     bool laneChange;
 
@@ -31,12 +21,8 @@ public class CopCarMove : MonoBehaviour
         speed = 1.8f;
         acceleration = speed / 1.5f;
         variableSpeed = speed;
-        offsetSpeed = 0.5f;
-        variableOffsetSpeed = 0;
-        offsetAcceleration = offsetSpeed / 2;
+        
         maxStoppingDistance = 1.6f;
-        laneChange = false;
-        targetOffset = 1;
 
         float direction = transform.eulerAngles.z;
         //Debug.Log("Found rotation: " + direction);
@@ -44,38 +30,22 @@ public class CopCarMove : MonoBehaviour
         {
             case 90:
                 directionVector = Vector2.left;
-                offsetDirection = Vector2.up;
-                offset = transform.position.y;
-                maxOffset = 1.7f;
-                minOffset = 0.4f;
-                median = 0.8f;
+                
                 break;
 
             case 180:
                 directionVector = Vector2.down;
-                offsetDirection = Vector2.right;
-                offset = transform.position.x;
-                maxOffset = -1.6f;
-                minOffset = -0.6f;
-                median = -1f;
+                
                 break;
 
             case 270:
                 directionVector = Vector2.right;
-                offsetDirection = Vector2.down;
-                offset = transform.position.y;
-                maxOffset = -1.7f;
-                minOffset = -0.4f;
-                median = -1.2f;
+               
                 break;
 
             case 0:
                 directionVector = Vector2.up;
-                offsetDirection = Vector2.left;
-                offset = transform.position.x;
-                maxOffset = 1.6f;
-                minOffset = 0.6f;
-                median = 1f;
+               
                 break;
 
             default:
@@ -87,15 +57,6 @@ public class CopCarMove : MonoBehaviour
 
         //Debug.Log("Direction Assigned: " + directionVector);
 
-        if (Mathf.Abs(offset - median) < 0)
-        {
-            offsetDirection = -1 * offsetDirection; // reverse offset
-            targetOffset = minOffset;
-        }
-        else
-        {
-            targetOffset = maxOffset;
-        }
 
 
     }
@@ -117,8 +78,6 @@ public class CopCarMove : MonoBehaviour
         Vector2 origin = (Vector2)transform.position + 0.6f * directionVector;//raycasts must originate in front of the car's hit box so it does not detect itself
 
         
-        if (laneChange == false)
-        {
             RaycastHit2D frontCast = Physics2D.Raycast(origin, directionVector, maxStoppingDistance, layerMask, 0f, 0f);
             Debug.DrawRay(origin, (directionVector * maxStoppingDistance), Color.red);
 
@@ -146,52 +105,11 @@ public class CopCarMove : MonoBehaviour
             }
 
 
+        
 
-            if ((frontCast.collider != null && variableSpeed > 0) || (frontCast.collider == null && variableSpeed < speed))
-            {
 
-                offsetCastOrigin = (Vector2)transform.position - (Vector2)offsetDirection * (offset - targetOffset);
 
-                RaycastHit2D sideCast = Physics2D.Raycast(offsetCastOrigin, directionVector, (maxStoppingDistance+1), layerMask, 0f, 0f);
-                Debug.DrawRay(offsetCastOrigin, (directionVector * (maxStoppingDistance+1)), Color.red);
-
-                RaycastHit2D sideBackCast = Physics2D.Raycast(offsetCastOrigin, (directionVector*-1), maxStoppingDistance, layerMask, 0f, 0f);
-                Debug.DrawRay(offsetCastOrigin, (directionVector * maxStoppingDistance * -1), Color.red);
-
-                if (sideCast.collider == null)
-                {
-                    laneChange = true;
-                    //need coroutine?
-                }
-            }
-
-        }
-
-        else if(laneChange == true)
-        {
-            variableOffsetSpeed += 0.1f;
-            variableSpeed = Mathf.Pow((4 - (Mathf.Pow(variableOffsetSpeed, 2f))), 0.5f);
-            elapsedOffset += variableOffsetSpeed * Time.deltaTime;
-            if(Mathf.Abs(elapsedOffset) >= Mathf.Abs(offset - targetOffset))
-            {
-                laneChange = false;
-                offsetDirection = -1 * offsetDirection;
-                variableOffsetSpeed = 0;
-                
-                if(targetOffset == maxOffset)
-                {
-                    targetOffset = minOffset;
-                }
-                else
-                {
-                    targetOffset = maxOffset;
-                }
-
-            }
-        }
-
-        transform.position = (Vector2)transform.position + directionVector * variableSpeed * Time.deltaTime + offsetDirection * variableOffsetSpeed * Time.deltaTime;
-
+        transform.position = (Vector2)transform.position + directionVector * variableSpeed * Time.deltaTime;
         //cars will now despawn themsevles from their own move scripts
         if (transform.position.x > horizontalMax && directionVector == Vector2.right)
         {
