@@ -62,6 +62,19 @@ public class CarSpawner : MonoBehaviour
             float randomCharacter = Random.Range(0, 6);//random character type(car, truck)
             float randomCar = Random.Range(0, 7);//random colour
 
+            float randomOffset = Random.Range(0, 2);
+            float offset = 0; //lane designation for cars
+
+            switch (randomOffset)//cars are randomly assigned to a lane (since we for whatever reason decided on double lanes)
+            {
+                case 0:
+                    offset = 0.5f;
+                    break;
+                case 1:
+                    offset = 1.5f;
+                    break;
+            }
+
             if (randomCharacter == 0 || randomCharacter == 1 || randomCharacter == 2)//select from Fellow Traveller list
             {
                 colliderScale = 1;
@@ -144,26 +157,16 @@ public class CarSpawner : MonoBehaviour
             }
             else
             {
-                colliderScale = 1;
+                colliderScale = 0.8f;
                 newCar = Instantiate(blackCopCar);
+                offset = 1;
             }
 
             carBox = newCar.AddComponent<BoxCollider2D>() as BoxCollider2D;
             carBox.isTrigger = true;
             carBox.size = new Vector2(colliderScale, colliderScale);
 
-            float randomOffset = Random.Range(0,2);
-            float offset = 0; //lane designation for cars
-
-            switch (randomOffset)//cars are randomly assigned to a lane (since we for whatever reason decided on double lanes)
-            {
-                case 0:
-                    offset = 0.5f;
-                    break;
-                case 1:
-                    offset = 1.5f;
-                    break;
-            }
+            
 
             //choose position
             float randomDirection = Random.Range(0,4);

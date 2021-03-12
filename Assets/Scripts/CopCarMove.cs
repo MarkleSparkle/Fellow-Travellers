@@ -11,7 +11,8 @@ public class CopCarMove : MonoBehaviour
     private Vector2 directionVector;
     private float variableSpeed;
     private float maxStoppingDistance;
-    
+
+    private Vector2 offsetDirection;
 
     bool laneChange;
 
@@ -21,7 +22,6 @@ public class CopCarMove : MonoBehaviour
         speed = 1.8f;
         acceleration = speed / 1.5f;
         variableSpeed = speed;
-        
         maxStoppingDistance = 1.6f;
 
         float direction = transform.eulerAngles.z;
@@ -30,21 +30,25 @@ public class CopCarMove : MonoBehaviour
         {
             case 90:
                 directionVector = Vector2.left;
+                offsetDirection = Vector2.up;
                 
                 break;
 
             case 180:
                 directionVector = Vector2.down;
+                offsetDirection = Vector2.left;
                 
                 break;
 
             case 270:
                 directionVector = Vector2.right;
+                offsetDirection = Vector2.down;
                
                 break;
 
             case 0:
                 directionVector = Vector2.up;
+                offsetDirection = Vector2.right;
                
                 break;
 
