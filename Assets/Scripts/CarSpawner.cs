@@ -159,7 +159,7 @@ public class CarSpawner : MonoBehaviour
             {
                 colliderScale = 0.8f;
                 newCar = Instantiate(blackCopCar);
-                offset = 1;
+                
             }
 
             carBox = newCar.AddComponent<BoxCollider2D>() as BoxCollider2D;
