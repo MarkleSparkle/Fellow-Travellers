@@ -33,6 +33,7 @@ public class CarSpawner : MonoBehaviour
     public GameObject orangeTruck;
     public GameObject greenTruck;
 
+    //Cop Cars
     public GameObject blackCopCar;
 
     public BoxCollider2D carBox;
@@ -75,7 +76,7 @@ public class CarSpawner : MonoBehaviour
                     break;
             }
 
-            if (randomCharacter == 0 || randomCharacter == 1 || randomCharacter == 2)//select from Fellow Traveller list
+            if (randomCharacter >= 0 && randomCharacter <= 2)//select from Fellow Traveller list
             {
                 colliderScale = 1;
 
