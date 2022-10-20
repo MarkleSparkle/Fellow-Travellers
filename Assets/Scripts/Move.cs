@@ -76,40 +76,43 @@ public class Move : MonoBehaviour
 
         maxStoppingDistance = 1.6f;
 
+
+        // **Ray Casting Object Detection**
+
         RaycastHit2D cast = Physics2D.Raycast(origin, directionVector, maxStoppingDistance, layerMask, 0, 0.5f);
         Debug.DrawRay(origin, (directionVector*maxStoppingDistance), Color.red);
 
-        if (cast.collider != null && variableSpeed > 0)
+        if (cast.collider != null && variableSpeed > 0)// If ray detects an object and the vehicle has not come to a complete stop
         {
             distance = (Vector2)cast.collider.transform.position - (Vector2)transform.position; //proximity-based deceleration, so cars have an appropriate stopping distance
             stoppingDistance = distance.magnitude - 0.1f;
             acceleration = (Mathf.Pow(speed, 2f))/ (2 * stoppingDistance);
             variableSpeed -= (acceleration*Time.deltaTime);
             Debug.Log(acceleration);
-            //Debug.Log("raycast hit body "+ cast.rigidbody + "raycast hit collider "+ cast.collider);
+            // Debug.Log("raycast hit body "+ cast.rigidbody + "raycast hit collider "+ cast.collider);
             angerPoints = angerGeneration;
             angerManagement.addAnger(angerPoints);
         }
-        else if (cast.collider != null && variableSpeed <= 0.05)//stays  stoppped while rays detect stuff. anger points are generated when at a complete stop
-        {
+        else if (cast.collider != null && variableSpeed <= 0.05)// If ray detects an object and vehicle is (essentially) at a complete stop
+        {// Vehicle stays stopped while rays detects another object. Anger points are generated while at a complete stop
             variableSpeed = 0;
             angerPoints = angerGeneration;
             angerManagement.addAnger(angerPoints);
         }
-        else if(cast.collider == null && variableSpeed < speed)//rays no longer detecting stuff, car accelerates
+        else if(cast.collider == null && variableSpeed < speed)// If ray no longer detects an object the vehicle re-accelerates
         {
             variableSpeed += 0.025f;
-            
         }
-        else//constant speed in the absence of obstructions
+        else //Constant speed in the absence of obstructions
         {
             variableSpeed = speed;
-            
         }
 
             transform.position = (Vector2)transform.position + directionVector * variableSpeed * Time.deltaTime;
 
-        //cars will now despawn themsevles from their own move scripts
+
+        // **Position-based Vehicle Despawning**
+
         if (transform.position.x > horizontalMax && directionVector == Vector2.right)
         {
             Destroy(gameObject);

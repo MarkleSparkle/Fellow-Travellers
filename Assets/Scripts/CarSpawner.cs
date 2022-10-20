@@ -37,6 +37,8 @@ public class CarSpawner : MonoBehaviour
     public GameObject blackCopCar;
 
     public BoxCollider2D carBox;
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -244,7 +246,7 @@ public class CarSpawner : MonoBehaviour
 
             //setting new car's main position
             newCar.transform.position = (Vector2) transform.position +
-            direction * changePoint + (Vector2) transform.position + offsetDirection * offset;
+                direction * changePoint + (Vector2) transform.position + offsetDirection * offset;
 
             //Destroy(newCar, 15f);
 

@@ -5,7 +5,7 @@ using UnityEngine;
 public class TreeSpawner : MonoBehaviour
 {//TreeSpawner spawns trees in the corners of the map at the beginning of the game
 
-    public GameObject treeFab; //see what I did there? ;D
+    public GameObject treeFab;
 
     void Start()
     {
