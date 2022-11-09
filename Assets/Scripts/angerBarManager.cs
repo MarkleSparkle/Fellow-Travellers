@@ -14,6 +14,10 @@ public class angerBarManager : MonoBehaviour
     public GameObject star2Holo;
     public GameObject star3;
     public GameObject star3Holo;
+
+    //score popup prefab
+    public GameObject PopupText;
+
     private bool star1active;
     private bool star2active;
     private bool star3active;

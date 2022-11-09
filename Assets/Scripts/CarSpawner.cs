@@ -38,7 +38,6 @@ public class CarSpawner : MonoBehaviour
 
     public BoxCollider2D carBox;
 
-
     // Start is called before the first frame update
     void Start()
     {

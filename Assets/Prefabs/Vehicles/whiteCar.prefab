@@ -95,3 +95,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   angerManagement: {fileID: 0}
+  PopupText: {fileID: 6141112664681693273, guid: 81fdbbe7d8b73674b9dd73edb699d2c2,
+    type: 3}
