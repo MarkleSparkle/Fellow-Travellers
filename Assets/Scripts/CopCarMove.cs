@@ -12,15 +12,15 @@ public class CopCarMove : MonoBehaviour
     private float variableSpeed;
     private float maxStoppingDistance;
 
-    private Vector2 offsetDirection;
+    private Vector2 offsetDirection; //difference in move script
 
     bool laneChange;
 
     void Start()
     {
         //initialize kinematic state variables
-        speed = 1.8f;
-        acceleration = speed / 1.5f;
+        speed = 1.8f; //difference in move script
+        acceleration = speed / 1.5f; //difference in move script
         variableSpeed = speed;
         maxStoppingDistance = 1.6f;
 
@@ -82,7 +82,7 @@ public class CopCarMove : MonoBehaviour
         Vector2 origin = (Vector2)transform.position + 0.6f * directionVector;//raycasts must originate in front of the car's hit box so it does not detect itself
 
         
-            RaycastHit2D frontCast = Physics2D.Raycast(origin, directionVector, maxStoppingDistance, layerMask, 0f, 0f);
+            RaycastHit2D frontCast = Physics2D.Raycast(origin, directionVector, maxStoppingDistance, layerMask, 0f, 0.5f);
             Debug.DrawRay(origin, (directionVector * maxStoppingDistance), Color.red);
 
             if (frontCast.collider != null && variableSpeed > 0)
@@ -109,7 +109,7 @@ public class CopCarMove : MonoBehaviour
             }
 
 
-        
+
 
 
 

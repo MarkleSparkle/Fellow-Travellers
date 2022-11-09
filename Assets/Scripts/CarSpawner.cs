@@ -160,7 +160,7 @@ public class CarSpawner : MonoBehaviour
             }
             else
             {
-                colliderScale = 0.8f;
+                colliderScale = 1f;
                 newCar = Instantiate(blackCopCar);
                 
             }

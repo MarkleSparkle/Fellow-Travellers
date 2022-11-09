@@ -69,7 +69,7 @@ public class Move : MonoBehaviour
         float verticalMin = -halfHeight - 1.2f;
         float verticalMax = halfHeight + 1.2f;
 
-        angerGeneration = 0.001f * Time.timeScale;
+        angerGeneration = 0.05f * Time.timeScale;
 
         int layerMask = Physics2D.DefaultRaycastLayers;
         Vector2 origin = (Vector2)transform.position + 0.6f*directionVector;//raycasts must originate in front of the car's hit box so it does not detect itself
@@ -88,7 +88,6 @@ public class Move : MonoBehaviour
             stoppingDistance = distance.magnitude - 0.1f;
             acceleration = (Mathf.Pow(speed, 2f))/ (2 * stoppingDistance);
             variableSpeed -= (acceleration*Time.deltaTime);
-            Debug.Log(acceleration);
             // Debug.Log("raycast hit body "+ cast.rigidbody + "raycast hit collider "+ cast.collider);
             angerPoints = angerGeneration;
             angerManagement.addAnger(angerPoints);
