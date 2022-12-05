@@ -18,24 +18,24 @@ public class PauseMenuManager : MonoBehaviour
             if (pausedGame)
             {
                 resume();
+                pauseMenu.SetActive(false);
             }
             else
             {
                 pause();
+                pauseMenu.SetActive(true);
             }
         }
     }
 
     public void resume()
     {
-        pauseMenu.SetActive(false);
         Time.timeScale = 1f;
         pausedGame = false;
     }
 
     public void pause()
     {
-        pauseMenu.SetActive(true);
         Time.timeScale = 0f;
         pausedGame = true;
     }

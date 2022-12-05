@@ -102,7 +102,6 @@ public class StoplineControl : MonoBehaviour
         rightBox.enabled = true;
         topBox.enabled = true;
         bottomBox.enabled = true;
-        Debug.Log("Enabling all stop boxes");
 
         //setting top/bottom amber glow active
         TopRedGlow.SetActive(false);
@@ -131,7 +130,6 @@ public class StoplineControl : MonoBehaviour
         //disable east/west boxes
         leftBox.enabled = false;
         rightBox.enabled = false;
-        Debug.Log("Disabling left/right stop boxes");
 
         //setting left/right green glow active
         LeftRedGlow.SetActive(false);
@@ -150,7 +148,6 @@ public class StoplineControl : MonoBehaviour
         rightBox.enabled = true;
         topBox.enabled = true;
         bottomBox.enabled = true;
-        Debug.Log("Enabling all stop boxes");
 
         //setting left/right amber glow active
         LeftRedGlow.SetActive(false);
@@ -179,7 +176,7 @@ public class StoplineControl : MonoBehaviour
         //altering the stop lights
         topBox.enabled = false;
         bottomBox.enabled = false;
-        Debug.Log("Disabling top/bottom stop boxes");
+
 
         //setting top/bottom green glow active
         TopRedGlow.SetActive(false);

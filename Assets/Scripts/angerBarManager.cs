@@ -33,6 +33,15 @@ public class angerBarManager : MonoBehaviour
         star3active = true;
     }
 
+    public bool[] areStarsActive()
+    {
+        bool[] active = new bool[3];
+        active[0] = star1active;
+        active[1] = star2active;
+        active[2] = star3active;
+        return active;
+    }
+
     public void addAnger(float angerPoints)
     {
         if (Time.timeScale > 0f) //if the game is not paused
@@ -40,7 +49,6 @@ public class angerBarManager : MonoBehaviour
             angerSlider.value -= angerPoints;
             angerFill.color = angerGradient.Evaluate(angerSlider.normalizedValue);
             rageFloat += angerPoints;
-            Debug.Log("angerPoints:"+angerPoints+" \\ rageFloat:"+rageFloat);
             rageCounter.text = Mathf.Floor(rageFloat).ToString();
         }
 
@@ -60,6 +68,11 @@ public class angerBarManager : MonoBehaviour
             star1active = false;
         }
 
+    }
+
+    public float getAnger()
+    {
+        return angerSlider.value;
     }
 
     

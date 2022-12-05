@@ -38,11 +38,17 @@ public class CarSpawner : MonoBehaviour
 
     public BoxCollider2D carBox;
 
+    //Settings script
+    public GameObject GameSettings;
+
+    private int level;
+
     // Start is called before the first frame update
     void Start()
     {
         maxTime = 2;
         currentTime = 0;
+        level = SaveSystem.LoadLevel();
     }
 
     // Update is called once per frame
@@ -61,7 +67,18 @@ public class CarSpawner : MonoBehaviour
         if (currentTime > maxTime)
         {
             GameObject newCar;
-            float randomCharacter = Random.Range(0, 6);//random character type(car, truck)
+
+            //getting the level of the game
+
+            float randomCharacter; //random character type(car, truck)
+
+            if (level == 1) // for the first level
+                randomCharacter = Random.Range(0, 3); //only cars and cops
+            else if (level == 2)// for the second level
+                randomCharacter = Random.Range(0, 6); //only cars, trucks and cops
+            else // for the third+ level
+                randomCharacter = Random.Range(3, 6); //only trucks and cops
+
             float randomCar = Random.Range(0, 7);//random colour
 
             float randomOffset = Random.Range(0, 2);

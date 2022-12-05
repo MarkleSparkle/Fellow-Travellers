@@ -95,8 +95,8 @@ public class Move : MonoBehaviour
             // Debug.Log("raycast hit body "+ cast.rigidbody + "raycast hit collider "+ cast.collider);
             angerPoints = angerGeneration;
             angerManagement.addAnger(angerPoints);
-            GameObject text = Instantiate(PopupText.gameObject);
-            text.GetComponent<RectTransform>().position.Set(text.GetComponent<RectTransform>().position.x + angerPoints,0,0);
+//            GameObject text = Instantiate(PopupText.gameObject);
+//           text.GetComponent<RectTransform>().position.Set(text.GetComponent<RectTransform>().position.x + angerPoints,0,0);
         }
         else if (cast.collider != null && variableSpeed <= 0.05)// If ray detects an object and vehicle is (essentially) at a complete stop
         {// Vehicle stays stopped while rays detects another object. Anger points are generated while at a complete stop
