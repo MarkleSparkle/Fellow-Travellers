@@ -54,12 +54,11 @@ public class GameSettings : MonoBehaviour
         if (currentTime < gameTime) //during gameTime
         {
             countdownText.text = (gameTime-Math.Floor(currentTime)).ToString();
-
         }
 
         else if (currentTime >= gameTime) //if the gameTime is 0 seconds
             gameOver();
-        else if (0 >= angerBarManager.getAnger()) //if the anger bar has run out
+        if (0 >= angerBarManager.getAnger()) //if the anger bar has run out
             gameOver();
     }
 
@@ -102,7 +101,7 @@ public class GameSettings : MonoBehaviour
     // Called when Main Menu button is pressed
     public void mainMenu()
     {
-
+        SceneManager.LoadScene("Mainmenu");
     }
 
     // Cleaning up the level before the next level starts

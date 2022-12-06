@@ -17,13 +17,19 @@ public class Move : MonoBehaviour
     private float angerGeneration;
     private float angerPoints = 0f;
     public angerBarManager angerManagement;
+    private AudioSource exhaustSound;
+    private bool fadeIn;
 
     //the popup prefab that shows the anger added
     public Text PopupText;
-    
+    private bool volume;
 
     void Start()
     {
+        exhaustSound = gameObject.GetComponent<AudioSource>();
+        FadeIn();
+
+
         speed = 1.5f;//initialize kinematic variables
         acceleration = speed/1.2f;
         variableSpeed = speed;
@@ -80,7 +86,6 @@ public class Move : MonoBehaviour
 
         maxStoppingDistance = 1.6f;
 
-
         // **Ray Casting Object Detection**
 
         RaycastHit2D cast = Physics2D.Raycast(origin, directionVector, maxStoppingDistance, layerMask, 0, 0.5f);
@@ -95,8 +100,6 @@ public class Move : MonoBehaviour
             // Debug.Log("raycast hit body "+ cast.rigidbody + "raycast hit collider "+ cast.collider);
             angerPoints = angerGeneration;
             angerManagement.addAnger(angerPoints);
-//            GameObject text = Instantiate(PopupText.gameObject);
-//           text.GetComponent<RectTransform>().position.Set(text.GetComponent<RectTransform>().position.x + angerPoints,0,0);
         }
         else if (cast.collider != null && variableSpeed <= 0.05)// If ray detects an object and vehicle is (essentially) at a complete stop
         {// Vehicle stays stopped while rays detects another object. Anger points are generated while at a complete stop
@@ -107,6 +110,7 @@ public class Move : MonoBehaviour
         else if(cast.collider == null && variableSpeed < speed)// If ray no longer detects an object the vehicle re-accelerates
         {
             variableSpeed += 0.025f;
+
         }
         else //Constant speed in the absence of obstructions
         {
@@ -120,6 +124,7 @@ public class Move : MonoBehaviour
 
         if (transform.position.x > horizontalMax && directionVector == Vector2.right)
         {
+            FadeOut();
             Destroy(gameObject);
         }
         else if (transform.position.x < horizontalMin && directionVector == Vector2.left)
@@ -135,10 +140,31 @@ public class Move : MonoBehaviour
             Destroy(gameObject);
         }
 
-
+        if (fadeIn)
+        {
+            if (exhaustSound.volume >= 0.05f) //volume at correct volume
+            {
+                fadeIn = false;
+            }
+            else
+            {
+                exhaustSound.volume += 0.005f;
+            }
+        }
     }
 
-    
+    void FadeIn()
+    {
+        exhaustSound.volume = 0;
+        fadeIn = true;
+        exhaustSound.Play();
+    }
+
+    void FadeOut()
+    {
+        exhaustSound.volume = 0;
+        exhaustSound.Stop();
+    }
 }
 
 //DETECTING PROXIMITY STUFF!

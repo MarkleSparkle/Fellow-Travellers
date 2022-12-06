@@ -203,7 +203,9 @@ public class CarSpawner : MonoBehaviour
                     startingPoint.x = horizontalMin;
                     changePoint = horizontalMin;
                     direction = Vector2.right;
-                    offsetDirection = Vector2.down; 
+                    offsetDirection = Vector2.down;
+                    offset = offset + 0.15f;
+
                     //rotation
                     newCar.transform.Rotate(0,0,270);
 
@@ -227,6 +229,7 @@ public class CarSpawner : MonoBehaviour
                     changePoint = horizontalMax;
                     direction = Vector2.right;
                     offsetDirection = Vector2.up;
+                    offset = offset + - 0.15f;
                     //set rotation
                     newCar.transform.Rotate(0, 0, 90);
 
@@ -238,8 +241,7 @@ public class CarSpawner : MonoBehaviour
                     changePoint = verticalMin;
                     direction = Vector2.up;
                     offsetDirection = Vector2.right;
-
-                   
+                                       
 
                     break;
                 default://just in case there are decimals
@@ -249,23 +251,14 @@ public class CarSpawner : MonoBehaviour
                     changePoint = verticalMin;
                     direction = Vector2.up;
                     offsetDirection = Vector2.right;
-
                     newCar.transform.Rotate(0,0,270);
 
                     break;
             }
 
-
-            //trying to pass the direction of the car to the move script
-            //Move script = newCar.GetComponent<Move>;
-
-
             //setting new car's main position
             newCar.transform.position = (Vector2) transform.position +
                 direction * changePoint + (Vector2) transform.position + offsetDirection * offset;
-
-            //Destroy(newCar, 15f);
-
 
             currentTime = 0;//resetting the current time after spawning a car
         }
